@@ -1,0 +1,13 @@
+
+<div class="transitions-enabled" id="pins">
+  <% @boards.each do |board| %>
+    <div class="box panel panel-default">
+      <div class="panel-header board">
+        <h2><%= link_to board.name, board_path(board) %></h2>
+      </div>
+      <div class="panel-body">
+        <p class="user">Created <%= time_ago_in_words board.created_at %> ago</p>
+      </div>
+    </div>
+  <% end %>
+</div>

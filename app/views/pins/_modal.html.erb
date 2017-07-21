@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Pin</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <%= form_tag add_pin_path, method: :post, class: "form-horizontal", role: "form" do %>
+              <div class="form-group">
+                <div class="col-xs-2 control-label">
+                  <%= label_tag(:title, "Title:") %>
+                </div>
+                <div class="col-xs-10">
+                  <%= text_field_tag(:title,"", class: "form-control", placeholder: "Enter title", autofocus: true) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-xs-2 control-label">
+                  <%= label_tag(:description, "Description:") %>
+                </div>
+                <div class="col-xs-10">
+                  <%= text_field_tag(:description,"", class: "form-control", placeholder: "Enter description") %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-xs-2 control-label">
+                  <%= label_tag(:board, "Board:") %>
+                </div>
+                <div class="col-xs-10">
+                  <%= select_tag :board_id, options_from_collection_for_select(@my_boards, "id", "name"), class: "form-control" %>  
+                </div>
+              </div>
+              <%= hidden_field_tag :pin_id %>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                <%= submit_tag("Add Pin", class: "btn btn-primary") %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).on("click", "#add_pin_btn", function () {
+     var myPinId = $(this).data('id');
+     $(".modal-body #pin_id").val( myPinId );
+  });
+</script>

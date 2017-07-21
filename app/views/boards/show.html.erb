@@ -1,0 +1,58 @@
+<div id="pin_show" class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading pin_image">
+      </div>
+      <div class="panel-body">
+        <h2><%= @board.name %></h2>
+      </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <% if user_signed_in? && current_user == @board.user %>
+              <%= link_to "New Pin", new_pin_path(@board), class: "btn btn-default" %>
+            <% end %>
+          </div>
+          <div class="col-md-6">
+            <div class="btn-group pull-right">
+              <% if user_signed_in? && current_user == @board.user %>
+                <%= link_to "Edit", edit_board_path(@board), class: "btn btn-primary" %>
+                <%= link_to "Delete", board_path(@board), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="transitions-enabled" id="pins">
+    <% @pins.each do |pin| %>
+      <div class="box panel panel-default">
+        <%= link_to image_tag(pin.image.url), pin %>
+        <div class="panel-body">
+          <h2><%= link_to pin.title, pin_path(pin) %></h2>  
+          <div class="row">
+            <div class="col-md-10">
+              <p class="user">Submitted by: <%= pin.user.email %></p>
+              <p class="time">Created <%= time_ago_in_words pin.created_at %> ago</p>
+            </div>
+            <div class="col-md-2">
+              <div class="btn-group pull-right">
+                <% if user_signed_in? && current_user != pin.user %>
+                  <%= link_to '#', class: "btn btn-default btn-xs", 'data-toggle' => "modal", 'data-target' => "#myModal", 'data-id' => pin.id, 'id' => 'add_pin_btn' do %>
+                    <span class="glyphicon glyphicon-pushpin"></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'pins/modal' %>

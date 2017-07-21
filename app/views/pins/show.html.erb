@@ -1,0 +1,40 @@
+<div id="pin_show" class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading pin_image">
+        <%= image_tag @pin.image.url %>      
+      </div>
+      <div class="panel-body">
+        <h1><%= @pin.title %></h1>
+        <p class="description"><%= @pin.description %></p>
+      </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="user">Submitted By: <%= @pin.user.email %></p>
+          </div>
+          <div class="col-md-6">
+            <div class="pull-right">
+              <% if user_signed_in? && current_user != @pin.user %>
+                <%= link_to '#', class: "btn btn-default", 'data-toggle' => "modal", 'data-target' => "#myModal", 'data-id' => @pin.id, 'id' => 'add_pin_btn' do %>
+                  <span class="glyphicon glyphicon-pushpin"></span>
+                <% end %>
+              <% end %>
+              <div class="btn-group">
+                <%= link_to like_pin_path(@pin), method: :put, class: "btn btn-default" do %>
+                  <span class="glyphicon glyphicon-heart"> <%= @pin.get_upvotes.size %></span>
+                <% end %>
+                <% if user_signed_in? && current_user == @pin.user %>
+                  <%#= link_to "Edit", edit_pin_path(@pin, :board => @pin.board), class: "btn btn-default" %>
+                  <%= link_to "Delete", pin_path(@pin), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'modal' %>

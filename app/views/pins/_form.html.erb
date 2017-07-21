@@ -1,0 +1,21 @@
+
+    <%= simple_form_for @pin, html: {multipart: true} do |f| %>
+      
+      <%= render 'shared/errors', obj: @pin %>
+
+      <div class="form-group">
+        <%= f.input :image, input_html: { class: 'form-control' } %>
+      </div>
+      <h3 align="center">OR</h3>
+      <div class="form-group">
+        <%= f.input :url, input_html: { class: 'form-control', type: 'url', pattern: "^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$" } %>
+      </div><hr>
+      <div class="form-group">
+        <%= f.input :title, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :description, input_html: { class: 'form-control' } %>
+      </div>
+        <%= f.hidden_field :board_id, :value => @board %>
+      <%= f.button :submit, class: "btn btn-primary" %>
+    <% end %>
